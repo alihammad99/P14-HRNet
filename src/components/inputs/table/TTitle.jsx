@@ -43,10 +43,10 @@ export default TTitle;
 
 const styles = {
   header: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#f4f4f9",
     padding: "10px 20px",
     textAlign: "left",
-    borderBottom: "1px solid #ddd",
+    borderBottom: "1px solid #e2e2ee",
   },
   tableTitleBox: {
     display: "flex",

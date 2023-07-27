@@ -136,7 +136,7 @@ export default Table;
 const styles = {
   table: {
     borderCollapse: "collapse",
-    fontSize: 11,
+    fontSize: 12,
     width: "100%",
   },
   header: {
