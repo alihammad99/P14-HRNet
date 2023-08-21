@@ -6,34 +6,66 @@ const Table = ({ employees, dataShowLength, page }) => {
   const [activeSort, setActiveSort] = useState("");
   const [data, setData] = useState(employees);
   const [displayData, setDisplayData] = useState(null);
+  const [titles, setTitles] = useState([]);
 
   useEffect(() => {
     setData(employees);
   }, [employees]);
 
+  const handleTitles = () => {
+    const titleBox = [];
+    const keys = Object.keys(data[0]);
+    keys.map((key) => {
+      const item = {};
+      item.name =
+        key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1");
+      item.sort = key;
+      item.isChild = false;
+      if (typeof data[0][key] === "object") {
+        item.isChild = true;
+      }
+      titleBox.push(item);
+    });
+    setTitles(titleBox);
+    console.log(displayData);
+  };
+
   useEffect(() => {
-    console.log(data.slice(dataShowLength * (page - 1), dataShowLength * page));
+    handleTitles();
     setDisplayData(
       data.slice(dataShowLength * (page - 1), dataShowLength * page)
     );
   }, [page, dataShowLength, data]);
 
-  if (!employees || !displayData) return;
+  if (!employees || !displayData || !titles) return;
 
-  const sortedEmployees = displayData.map((item, index) => (
-    <tr key={index} style={styles.row}>
-      <td style={styles.cell}>{index + 1 + (page - 1) * dataShowLength}</td>
-      <td style={styles.cell}>{item.firstName}</td>
-      <td style={styles.cell}>{item.lastName}</td>
-      <td style={styles.cell}>{item.startDate}</td>
-      <td style={styles.cell}>{item.department}</td>
-      <td style={styles.cell}>{item.dateOfBirth}</td>
-      <td style={styles.cell}>{item.address.street}</td>
-      <td style={styles.cell}>{item.address.city}</td>
-      <td style={styles.cell}>{item.address.state}</td>
-      <td style={styles.cell}>{item.address.zipCode}</td>
-    </tr>
-  ));
+  const sortedEmployees = displayData.map((item, index) => {
+    const keys = Object.keys(item);
+    const renderTd = keys.map((key) => {
+      if (typeof item[key] !== "object") {
+        return (
+          <td style={styles.cell} key={key}>
+            {item[key]}
+          </td>
+        );
+      } else {
+        const nestedKeys = Object.keys(item[key]);
+        const renderChild = nestedKeys.map((child) => (
+          <td style={styles.cell} key={child}>
+            {item[key][child]}
+          </td>
+        ));
+        return renderChild;
+      }
+    });
+    // console.log(keys);
+    return (
+      <tr key={index} style={styles.row}>
+        <td style={styles.cell}>{index + 1 + (page - 1) * dataShowLength}</td>
+        {renderTd}
+      </tr>
+    );
+  });
 
   return (
     <>
@@ -49,7 +81,14 @@ const Table = ({ employees, dataShowLength, page }) => {
               setData={setData}
               name="N"
             />
-            <TTitle
+            <RenderTitles
+              titles={titles}
+              activeSort={activeSort}
+              setActiveSort={setActiveSort}
+              data={data}
+              setData={setData}
+            />
+            {/* <TTitle
               activeSort={activeSort}
               setActiveSort={setActiveSort}
               data={data}
@@ -120,7 +159,7 @@ const Table = ({ employees, dataShowLength, page }) => {
               setData={setData}
               name="Zip Code"
               sort="address.zipCode"
-            />
+            /> */}
           </tr>
         </thead>
         <tbody>{sortedEmployees}</tbody>
@@ -130,6 +169,41 @@ const Table = ({ employees, dataShowLength, page }) => {
 };
 
 export default Table;
+
+const RenderTitles = ({ titles, data, activeSort, setActiveSort, setData }) => {
+  return titles.map((title) => {
+    if (title.isChild) {
+      // console.log(title.sort);
+      const subKeys = Object.keys(data[0][title.sort]);
+      return subKeys.map((key, index) => (
+        <TTitle
+          key={index}
+          activeSort={activeSort}
+          setActiveSort={setActiveSort}
+          data={data}
+          setData={setData}
+          name={`${
+            key.charAt(0).toUpperCase() +
+            key.slice(1).replace(/([A-Z])/g, " $1")
+          }`}
+          sort={`${title.sort}.${key}`}
+        />
+      ));
+    } else {
+      return (
+        <TTitle
+          key={title.sort}
+          activeSort={activeSort}
+          setActiveSort={setActiveSort}
+          data={data}
+          setData={setData}
+          name={title.name}
+          sort={title.sort}
+        />
+      );
+    }
+  });
+};
 
 // Example usage:
 

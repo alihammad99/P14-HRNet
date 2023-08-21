@@ -10,7 +10,7 @@ const TTitle = ({ name, sort, setData, activeSort, setActiveSort, data }) => {
   useEffect(() => {
     if (name !== "N") {
       sortData(data, sort, setData, reverse);
-      console.log(data);
+      // console.log(data);
     }
   }, [sortValue]);
 

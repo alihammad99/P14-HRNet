@@ -4,7 +4,7 @@ const generateMockEmployee = () => {
   const startDate = faker.date
     .between({
       from: "2010-01-01",
-      to: "2023-07-26",
+      to: "2023-08-26",
     })
     .toISOString()
     .split("T")[0];
@@ -12,7 +12,7 @@ const generateMockEmployee = () => {
   return {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
-    dateOfBirth: faker.date.birthdate(),
+    dateOfBirth: formatDate(faker.date.birthdate()),
     startDate,
     department: faker.helpers.arrayElement([
       "IT",
@@ -36,3 +36,11 @@ export default function () {
   localStorage.setItem("employees", JSON.stringify([...mockData]));
   window.location.reload();
 }
+
+const formatDate = (date) => {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // +1 because months are 0-indexed in JS
+  const year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
+};
