@@ -1,7 +1,8 @@
+import { memo } from "react";
 import DropdownInput from "../drop-down";
 import TextInput from "../text-input";
 
-const Address = ({ data, setData }) => {
+const Address = memo(({ data, setData }) => {
   return (
     <div style={styles.container}>
       <p style={styles.title}>Address</p>
@@ -13,7 +14,8 @@ const Address = ({ data, setData }) => {
       </div>
     </div>
   );
-};
+});
+Address.displayName = "Address";
 
 export default Address;
 

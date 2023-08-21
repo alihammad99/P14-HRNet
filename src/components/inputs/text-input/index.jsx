@@ -1,4 +1,5 @@
-const TextInput = ({ label = "label", setData, name }) => {
+import { memo } from "react";
+const TextInput = memo(({ label = "label", setData, name }) => {
   const handleChange = (event) => {
     const value = event.target.value;
     switch (name) {
@@ -44,7 +45,8 @@ const TextInput = ({ label = "label", setData, name }) => {
       <input type="text" onChange={handleChange} />
     </div>
   );
-};
+});
+TextInput.displayName = "MyComponent";
 
 export default TextInput;
 

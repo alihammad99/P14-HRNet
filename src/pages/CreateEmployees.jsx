@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import saveEmployee from "../utils/saveEmployee";
 import NewEmployeeInputs from "../components/new-employee-inputs";
+import EmployeesContext from "../context";
+import hasValues from "../utils/inputChecker";
 
 const CreateEmployee = () => {
   const [data, setData] = useState({
@@ -17,13 +18,26 @@ const CreateEmployee = () => {
       zipCode: "",
     },
   });
+
+  const { setValue } = useContext(EmployeesContext);
+
+  const handleSave = () => {
+    const check = hasValues(data);
+    if (check) {
+      setValue((value) => [{ ...data }, ...value]);
+      alert("🤩 Employee Saved!");
+    } else {
+      alert("⚠️ Please fill all inputs");
+    }
+  };
+
   return (
     <div style={styles.box}>
       <h1>HRnet</h1>
       <Link to="/employees">View Current Employees</Link>
       <h2>Create Employee</h2>
       <NewEmployeeInputs data={data} setData={setData} />
-      <button onClick={() => saveEmployee(data)} style={styles.button}>
+      <button onClick={handleSave} style={styles.button}>
         Save
       </button>
     </div>

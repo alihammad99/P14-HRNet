@@ -1,4 +1,6 @@
-const Header = ({ dataShowLength, setDataShowLength, setSearchValue }) => {
+import { memo } from "react";
+
+const Header = memo(({ dataShowLength, setDataShowLength, setSearchValue }) => {
   return (
     <div style={styles.box}>
       <div style={styles.headerBox}>
@@ -21,8 +23,8 @@ const Header = ({ dataShowLength, setDataShowLength, setSearchValue }) => {
       />
     </div>
   );
-};
-
+});
+Header.displayName = "Header";
 export default Header;
 
 const styles = {

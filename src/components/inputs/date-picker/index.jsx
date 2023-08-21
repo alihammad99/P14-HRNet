@@ -1,6 +1,7 @@
+import { memo } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-const DatePickerInput = ({ label = "date picker", data, setData }) => {
+const DatePickerInput = memo(({ label = "date picker", data, setData }) => {
   return (
     <div style={styles.container}>
       <label>{label}</label>
@@ -17,7 +18,8 @@ const DatePickerInput = ({ label = "date picker", data, setData }) => {
       )}
     </div>
   );
-};
+});
+DatePickerInput.displayName = "DatePickerInput";
 
 export default DatePickerInput;
 

@@ -1,4 +1,5 @@
-const ArrowIcon = ({ width, height, color, direction }) => {
+import { memo } from "react";
+const ArrowIcon = memo(({ width, height, color, direction }) => {
   // Set default values for width, height, color, and direction
   width = width || "24";
   height = height || "24";
@@ -27,6 +28,7 @@ const ArrowIcon = ({ width, height, color, direction }) => {
       <path d="M14 7l-5 5 5 5V7z" />
     </svg>
   );
-};
+});
+ArrowIcon.displayName = "ArrowIcon";
 
 export default ArrowIcon;

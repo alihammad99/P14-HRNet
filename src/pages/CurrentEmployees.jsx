@@ -1,16 +1,21 @@
-import Testc from "oc-react-tables";
+import { lazy, Suspense } from "react";
 import NotFound from "../components/not-found";
+import EmployeesContext from "../context";
+import { useContext } from "react";
+const Testc = lazy(() => import("oc-react-tables"));
 
 const CurrentEmployees = () => {
-  const mockData = localStorage.getItem("employees");
-  const employees = JSON.parse(mockData);
+  const { value } = useContext(EmployeesContext);
 
-  if (!employees) return <NotFound />;
-  // const pages = Math.ceil(data.length / dataShowLength);
+  console.log(value);
+
+  if (!value.length) return <NotFound />;
   return (
     <div style={styles.container}>
       <h2>Current Employees</h2>
-      <Testc data={employees} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Testc data={value} />
+      </Suspense>
     </div>
   );
 };

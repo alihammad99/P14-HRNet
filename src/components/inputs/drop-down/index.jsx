@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { states } from "../../../data/states";
 import { departments } from "../../../data/departments";
 
-const DropdownInput = ({ name, data, setData }) => {
+const DropdownInput = memo(({ name, data, setData }) => {
   if (name === "state") {
     return (
       <div style={styles.container}>
@@ -19,11 +20,12 @@ const DropdownInput = ({ name, data, setData }) => {
   } else {
     return <p>Please add a valid dropdown menu name: department or state</p>;
   }
-};
+});
+DropdownInput.displayName = "DropdownInput";
 
 export default DropdownInput;
 
-const RenderStates = ({ data, setData }) => {
+const RenderStates = memo(({ data, setData }) => {
   const handleChange = (event) => {
     setData((data) => ({
       ...data,
@@ -45,9 +47,10 @@ const RenderStates = ({ data, setData }) => {
       {options}
     </select>
   );
-};
+});
+RenderStates.displayName = "RenderStates";
 
-const RenderDepartments = ({ data, setData }) => {
+const RenderDepartments = memo(({ data, setData }) => {
   const handleChange = (event) => {
     setData((data) => ({ ...data, department: event.target.value }));
   };
@@ -66,7 +69,8 @@ const RenderDepartments = ({ data, setData }) => {
       {options}
     </select>
   );
-};
+});
+RenderDepartments.displayName = "RenderDepartments";
 
 const styles = {
   container: {

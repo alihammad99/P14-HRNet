@@ -1,3 +1,4 @@
+import { EmployeesProvider } from "./context";
 import CreateEmployees from "./pages/CreateEmployees";
 import CurrentEmployees from "./pages/CurrentEmployees";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -14,7 +15,9 @@ function App() {
   ]);
   return (
     <div style={styles.container}>
-      <RouterProvider router={router} />
+      <EmployeesProvider>
+        <RouterProvider router={router} />
+      </EmployeesProvider>
     </div>
   );
 }

@@ -33,13 +33,12 @@ const generateMockEmployee = () => {
 export default function () {
   const mockData = Array.from({ length: 30 }, generateMockEmployee);
   console.log([...mockData]);
-  localStorage.setItem("employees", JSON.stringify([...mockData]));
-  window.location.reload();
+  return [...mockData];
 }
 
 const formatDate = (date) => {
   const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // +1 because months are 0-indexed in JS
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
 
   return `${year}-${month}-${day}`;
