@@ -10,11 +10,11 @@ const CreateEmployee = () => {
     lastName: "",
     dateOfBirth: "",
     startDate: "",
-    department: "",
+    department: "Sales",
     address: {
       street: "",
       city: "",
-      state: "",
+      state: "Alabama",
       zipCode: "",
     },
   });
