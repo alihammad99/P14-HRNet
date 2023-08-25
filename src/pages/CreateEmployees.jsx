@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import NewEmployeeInputs from "../components/new-employee-inputs";
 import EmployeesContext from "../context";
 import hasValues from "../utils/inputChecker";
+import convertDate from "../utils/handleDate";
 
 const CreateEmployee = () => {
   const [data, setData] = useState({
@@ -24,7 +25,14 @@ const CreateEmployee = () => {
   const handleSave = () => {
     const check = hasValues(data);
     if (check) {
-      setValue((value) => [{ ...data }, ...value]);
+      setValue((value) => [
+        {
+          ...data,
+          dateOfBirth: convertDate(data.dateOfBirth),
+          startDate: convertDate(data.startDate),
+        },
+        ...value,
+      ]);
       alert("🤩 Employee Saved!");
     } else {
       alert("⚠️ Please fill all inputs");

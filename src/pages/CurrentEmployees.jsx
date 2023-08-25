@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import NotFound from "../components/not-found";
 import EmployeesContext from "../context";
 import { useContext } from "react";
-const Testc = lazy(() => import("oc-react-tables"));
+const Tables = lazy(() => import("oc-react-tables"));
 
 const CurrentEmployees = () => {
   const { value } = useContext(EmployeesContext);
@@ -14,7 +14,7 @@ const CurrentEmployees = () => {
     <div style={styles.container}>
       <h2>Current Employees</h2>
       <Suspense fallback={<div>Loading...</div>}>
-        <Testc data={value} />
+        <Tables data={value} />
       </Suspense>
     </div>
   );
